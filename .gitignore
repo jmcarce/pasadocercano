@@ -1,1 +1,3 @@
 envir
+.env.prod
+.env.prod.db
