@@ -10,4 +10,18 @@ services:
       - 8000:8000
     env_file:
       - ./.env.dev
+    depends_on: 
+      - db
+  
+  db:
+    build: ./postgis
+    volumes:
+      - postgis_data:/var/lib/postgresql/data
+    environment: 
+      - POSTGRES_USER=pasadocercano
+      - POSTGRES_PASSWORD=pasadocercano
+      - POSTGRES_DB=pasadocercano_dev
 
+volumes:
+  postgis_data:
+  
