@@ -1,0 +1,6 @@
+Aplicacion web en django para buscar fotografias cercanas a una localización en el mapa
+basada en https://testdriven.io/blog/dockerizing-django-with-postgres-gunicorn-and-nginx/
+
+Modificaciones:
+- Base de datos Postgres con extension PostGIS
+- Imagenes de para los contenedores a partir de Debian-Buster-Slim

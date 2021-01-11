@@ -1,0 +1,72 @@
+###########
+# BUILDER #
+###########
+
+FROM python:3.9-slim-buster as builder
+
+WORKDIR /usr/src/app
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Instalar bibliotecas geoespaciales y dependencias para psycopg2
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        binutils libproj-dev gdal-bin \
+        netcat gcc python3-dev libpq-dev\
+    && rm -rf /var/lib/apt/lists/* 
+
+# Actualizar pip e instalar flake8 como lint
+RUN pip install --upgrade pip
+RUN pip install flake8
+# Instalar requirements.txt
+COPY . .
+RUN flake8 --ignore=E501,F401 .
+
+# Instalar resto de dependencias
+COPY ./requirements.txt .
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+#########
+# FINAL #
+#########
+
+FROM python:3.9-slim-buster
+
+# Crear el directorio home del usuario app para la aplicación 
+# RUN mkdir - /home/app
+
+# crear un usuario con su grupo para la aplicacion
+RUN addgroup --system app && adduser --system --group --home /home/app app
+
+# crear el resto de directorios necesarios
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir ${APP_HOME}
+WORKDIR ${APP_HOME}
+
+# instalar las dependencias desde la imagen builder anterior
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    libpq-dev netcat\
+    && rm -rf /var/lib/apt/lists/*
+
+# copiar los wheels desde builder e instalarlos
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /usr/src/app/requirements.txt .
+RUN pip install --no-cache /wheels/*
+
+# copiar el archivo de arranque entrypoint.prod.sh
+COPY ./entrypoint.prod.sh ${APP_HOME}
+
+# copiar todos los archivos de la aplicacion
+COPY . ${APP_HOME}
+
+# cambiar el propietario de los archivos de la aplicacion
+RUN chown -R app:app ${APP_HOME}
+
+# Cambiamos al usuario app
+USER app
+
+# ejecutar el fichero de inicio como usuario app
+ENTRYPOINT [ "/home/app/web/entrypoint.prod.sh" ]
