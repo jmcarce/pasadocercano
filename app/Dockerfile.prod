@@ -33,9 +33,6 @@ RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requir
 
 FROM python:3.9-slim-buster
 
-# Crear el directorio home del usuario app para la aplicación 
-# RUN mkdir - /home/app
-
 # crear un usuario con su grupo para la aplicacion
 RUN addgroup --system app && adduser --system --group --home /home/app app
 
@@ -45,7 +42,7 @@ ENV APP_HOME=/home/app/web
 RUN mkdir ${APP_HOME}
 WORKDIR ${APP_HOME}
 
-# instalar las dependencias desde la imagen builder anterior
+# instalar las dependencias
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     libpq-dev netcat\
