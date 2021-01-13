@@ -1,3 +1,8 @@
 from django.contrib import admin
+from django.contrib.gis.admin import OSMGeoAdmin
+from .models import Argazki
 
-# Register your models here.
+
+@admin.register(Argazki)
+class ArgazkiAdmin(OSMGeoAdmin):
+    list_display = ('titulo', 'autor', 'ubicacion', 'orientacion', 'fecha', 'archivo')

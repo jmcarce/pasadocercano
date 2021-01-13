@@ -47,7 +47,7 @@ WORKDIR ${APP_HOME}
 # instalar las dependencias
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    libpq-dev netcat\
+    libpq-dev netcat gdal-bin\
     && rm -rf /var/lib/apt/lists/*
 
 # copiar los wheels desde builder e instalarlos
