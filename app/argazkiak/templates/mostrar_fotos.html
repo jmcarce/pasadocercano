@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block mainbody %}
+<h1>Aqui sale el mapa con las fotos y tal</h1>
+<img src="{% static 'argazkiak/logo.png' %}" alt="Un logotipo" >
+<h1>Fotos cercanas</h1>
+<div id="map_div" onclick="actualiza_centro()"></div>
+<div id="centro_coord"></div>
+<script src="{% static 'argazkiak/js/base_map_geoeuskadi.js' %}"></script>
+<script src="{% static 'argazkiak/geodata/ubicaciones.js' %}"></script>
+<script src="{% static 'argazkiak/js/argazkiak_layer.js' %}"></script>
+{% endblock %}
