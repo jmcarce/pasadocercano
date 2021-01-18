@@ -1,1 +1,31 @@
-#map_div { height: 420px; }
+#map_div { 
+    height: 400px;
+}
+
+#datos_div {
+    height: 180px;
+    background-color: darkseagreen ;
+}
+
+#logo_box {
+    height: 100%;
+    float: left;
+}
+
+#textos {
+    display: inline;
+    float: left;
+}
+
+#centro_coord {
+    background-color: darkgoldenrod;
+}
+
+#logomcarce {
+    height: 180px;
+}
+
+h1 {
+    padding: 0;
+    margin: 0;
+}
