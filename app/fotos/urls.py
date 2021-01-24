@@ -5,12 +5,13 @@ from django.conf.urls.static import static
 
 # from upload.views import image_upload
 from argazkiak.views import mostrar_fotos
-
+from argazkiak.views import bilatu
 
 urlpatterns = [
     # path("", image_upload, name="upload"),
     path("", mostrar_fotos, name="mostrar"),
     path('admin/', admin.site.urls),
+    path('bilatu/', bilatu, name='bilatu'),
 ]
 
 if bool(settings.DEBUG):

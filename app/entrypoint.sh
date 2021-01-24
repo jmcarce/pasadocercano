@@ -11,7 +11,7 @@ then
     echo "PostgreSQL iniciado"
 fi
 # echo "**** 1.- Flush ****"
-# python3 manage.py flush --no-input
+python3 manage.py flush --no-input
 echo "**** 2.- Make Migrations ****"
 python3 manage.py makemigrations
 echo "**** 3.- Migrate ****"
