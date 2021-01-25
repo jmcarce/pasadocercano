@@ -10,7 +10,7 @@ function paraCada(feature, layer){
 
 // obtener json con las ubicaciones:
 function buscar_ubicaciones() {
-    const requestURL = 'http://192.168.0.225:8000/bilatu/';
+    const requestURL = 'http://'+ document.location.hostname +":"+ document.location.port + '/bilatu/';
     const request = new XMLHttpRequest();
     request.open('GET', requestURL);
     //request.responseType = 'json';
